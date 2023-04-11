@@ -4,10 +4,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { ReactNode } from 'react';
 import counterReducer from '@/src/redux/features/counter-slice';
+import postsReducer from '@/src/redux/features/posts-slice';
 
 const store = configureStore({
   reducer: {
     counter: counterReducer,
+    posts: postsReducer
   },
 });
 
