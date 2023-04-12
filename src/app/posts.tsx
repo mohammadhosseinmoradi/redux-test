@@ -1,36 +1,48 @@
-'use client'
+'use client';
 
 import { useAppDispatch, useAppSelector } from '@/src/redux/app/hooks';
 import { actions, selects } from '@/src/redux/features/posts-slice';
-import { useEffect } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 
-export default function Posts() {
+export default function Posts() : ReactNode {
   const dispatch = useAppDispatch();
   const posts = useAppSelector(selects.posts);
   const status = useAppSelector(selects.status);
   const error = useAppSelector(selects.error);
+  const isMounted = useRef(false);
 
   useEffect(() => {
-    dispatch(actions.fetchPosts());
+    if (!isMounted.current && status === '') {
+      isMounted.current = true;
+      dispatch(actions.fetchPosts());
+    }
   }, []);
 
   switch (status) {
     case 'loading':
       return <div>
         Loading...
-      </div>
+      </div>;
     case 'succeeded':
-      return  <div>
-        Succeeded
-      </div>
+      return <div>
+        {
+          posts.map(post => {
+            return <article key={post.id}>
+              {
+                post.title
+              }
+            </article>;
+          })
+        }
+      </div>;
     case 'failed':
       return <div>
         Failed
-      </div>
+      </div>;
 
     default:
       return <div>
         hi
-      </div>
+      </div>;
   }
 }

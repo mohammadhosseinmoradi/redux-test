@@ -1,9 +1,8 @@
-import React, {ReactNode} from "react";
-import Counter from '@/src/app/counter';
-import Posts from '@/src/app/posts';
+import Todos from '@/src/app/todos';
 
 export default async function Home() {
-    return <div>
-        <Posts/>
-    </div>
+
+  return <div>
+    <Todos />
+  </div>;
 }
